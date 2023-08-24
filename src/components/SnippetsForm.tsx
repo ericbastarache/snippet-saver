@@ -1,7 +1,7 @@
 'use client';
 import { Fragment, useState, useContext } from 'react';
 import { SnippetsContext } from './SnippetsContainer';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const SnippetsForm = () => {
     const { db, setSnippets, snippets, searchTerm, setSearchTerm, setOldSnippets, oldSnippets } = useContext(SnippetsContext);
@@ -38,7 +38,9 @@ const SnippetsForm = () => {
                 />
               </div>
             </div> 
-            <button onClick={() => setShowModal(true)}>New Snippet</button>
+            <button onClick={() => setShowModal(true)}>
+      <PlusIcon className="h-6 w-6 text-white" aria-hidden="true" />
+      </button>
             {showModal && (
                 <div class="fixed z-10 inset-0 overflow-y-auto">
                   <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

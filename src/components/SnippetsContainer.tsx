@@ -14,7 +14,12 @@ const SnippetsContextProvider = ({ children }) => {
 
     useEffect(() => {
         const openDatabase = async (): Promise<void> => {
-            const db = await Database.load('sqlite:/Users/ericb/Documents/snippet-saver/test.db');
+            const db = await Database.load('sqlite:test.db');
+            try {
+                db.execute('CREATE TABLE IF NOT EXISTS snippets (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT)');
+            } catch (error) {
+                console.log(error);
+            }
             setDatabaseInstance(db);
         }
         openDatabase();
