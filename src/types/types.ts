@@ -1,4 +1,4 @@
-export type Snippet {
+export type Snippet = {
     id: number;
     title: string;
     content: string;

@@ -2,11 +2,11 @@
 import { useState, useContext, useEffect } from 'react';
 import { DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { SnippetsContext } from './SnippetsContainer';
-import { Snippet } from '../types';
+import { Snippet } from '../types/types';
 
 const SnippetsList = () => {
-    const { db, snippets, setSnippets, setOldSnippets } = useContext(SnippetsContext);
-    const [showSnippet, setShowSnippet] = useState<null | Snippet>(null);
+    const { db, snippets, setSnippets, setOldSnippets } = useContext(SnippetsContext)!;
+    const [showSnippet, setShowSnippet] = useState<null | {title: string, content: string}>(null);
 
     useEffect(() => {
       const fetchSnippets = async (): Promise<void> => {
@@ -15,9 +15,9 @@ const SnippetsList = () => {
         setOldSnippets(snippets);
       }
       fetchSnippets();
-    }, [db]);
+    }, [db, setSnippets, setOldSnippets]);
 
-    const copyToClipboard = (snippet: Snippet) => (): void => {
+    const copyToClipboard = (snippet: string) => (): void => {
       navigator.clipboard.writeText(snippet);
     };
 
@@ -55,7 +55,7 @@ const SnippetsList = () => {
                   {showSnippet.content}
                 </code>
               </pre>
-              <button className="mt-3 flex items-center cursor-pointer w-52 h-8 text-black py-4" onClick={copyToClipboard(showSnippet)}>
+              <button className="mt-3 flex items-center cursor-pointer w-52 h-8 text-black py-4" onClick={copyToClipboard(showSnippet.content)}>
                 <DocumentDuplicateIcon className="w-6 h-6" />
                 Copy to clipboard
               </button>

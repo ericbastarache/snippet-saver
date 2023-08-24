@@ -1,13 +1,23 @@
 'use client';
 
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, FC, ReactNode } from 'react';
 import Database from 'tauri-plugin-sql-api';
-import { Snippet } from '../types';
+import { Snippet } from '../types/types';
 
-const SnippetsContext = createContext(null);
+export type SnippetsContextType = {
+    db: any;
+    snippets: Array<Snippet>;
+    setSnippets: (snippets: Array<Snippet>) => void;
+    oldSnippets: Array<Snippet>;
+    searchTerm: string;
+    setOldSnippets: (snippets: Array<Snippet>) => void;
+    setSearchTerm: (searchTerm: string) => void;
+};
 
-const SnippetsContextProvider = ({ children }) => {
-    const [databaseInstance, setDatabaseInstance] = useState(null);
+const SnippetsContext = createContext<null | SnippetsContextType>(null);
+
+const SnippetsContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
+    const [databaseInstance, setDatabaseInstance] = useState<any>(null);
     const [snippets, setSnippets] = useState<Array<Snippet>>([]);
     const [oldSnippets, setOldSnippets] = useState<Array<Snippet>>([]);
     const [searchTerm, setSearchTerm] = useState<string>('');
